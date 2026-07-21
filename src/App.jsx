@@ -1,4 +1,5 @@
 import TodoInput from "./components/TodoInput";
+import TodoList from "./components/TodoList";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <button className="filter-btn">Done</button>
         <button className="filter-btn">Completed</button>
       </div>
+      <TodoList />
     </div>
   );
 }
