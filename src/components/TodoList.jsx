@@ -1,6 +1,6 @@
 import "./TodoList.css";
 
-export default function TodoList({ todos }) {
+export default function TodoList({ todos, deleteTodo }) {
   return (
     <div className="list-container">
       {todos.length > 0 ? (
@@ -13,7 +13,12 @@ export default function TodoList({ todos }) {
 
               <div className="right-side">
                 <button className="edit-btn">Edit</button>
-                <button className="delete-btn">Delete</button>
+                <button
+                  className="delete-btn"
+                  onClick={() => deleteTodo(ele.id)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           );

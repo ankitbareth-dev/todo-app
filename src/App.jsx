@@ -13,6 +13,11 @@ function App() {
 
     setTodos((prev) => [newTodo, ...prev]);
   };
+
+  const deleteTodo = (id) => {
+    const newTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(newTodos);
+  };
   return (
     <div className="app-container">
       <h2 className="title">TodoInput</h2>
@@ -23,7 +28,7 @@ function App() {
         <button className="filter-btn">Done</button>
         <button className="filter-btn">Completed</button>
       </div>
-      <TodoList todos={todos} />
+      <TodoList todos={todos} deleteTodo={deleteTodo} />
       <div className="delete-button-container">
         <button className="delete-task-btn">Delete done tasks</button>
         <button className="delete-task-btn">Delete all tasks</button>
