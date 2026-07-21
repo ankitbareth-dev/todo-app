@@ -39,3 +39,9 @@
 .fallback-value {
   text-align: center;
 }
+.todo-checkbox {
+  width: 28px;
+  height: 28px;
+  accent-color: #22c55e;
+  cursor: pointer;
+}

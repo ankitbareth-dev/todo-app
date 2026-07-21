@@ -1,7 +1,6 @@
 import "./TodoList.css";
 
 export default function TodoList({ todos, deleteTodo, editTodo }) {
-
   return (
     <div className="list-container">
       {todos.length > 0 ? (
@@ -13,6 +12,7 @@ export default function TodoList({ todos, deleteTodo, editTodo }) {
               </div>
 
               <div className="right-side">
+                <input type="checkbox" className="todo-checkbox" />
                 <button className="edit-btn" onClick={() => editTodo(todo.id)}>
                   Edit
                 </button>

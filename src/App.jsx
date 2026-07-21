@@ -63,8 +63,8 @@ function App() {
       <h2 className="title">TodoList</h2>
       <div className="filter-container">
         <button className="filter-btn">All</button>
-        <button className="filter-btn">Done</button>
         <button className="filter-btn">Completed</button>
+        <button className="filter-btn">Pending</button>
       </div>
       <TodoList todos={todos} deleteTodo={deleteTodo} editTodo={editTodo} />
       <div className="delete-button-container">
