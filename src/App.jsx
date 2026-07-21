@@ -1,17 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => {
+    const storedTodos = localStorage.getItem("todos");
+    return storedTodos ? JSON.parse(storedTodos) : [];
+  });
   const [inputValue, setInputValue] = useState("");
-  const [isEditable, setIsEditable] = useState(false);
   const [editingId, setEditingId] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const addTodo = () => {
     if (!inputValue.trim()) return;
 
-    if (isEditable) {
+    if (editingId !== null) {
       setTodos((prev) =>
         prev.map((todo) =>
           todo.id === editingId ? { ...todo, todoName: inputValue } : todo,
@@ -19,12 +25,13 @@ function App() {
       );
 
       setEditingId(null);
-      setIsEditable(false);
     } else {
       const newTodo = {
         id: Date.now(),
         todoName: inputValue,
       };
+
+      localStorage.setItem("todos", JSON.stringify(todos));
 
       setTodos((prev) => [newTodo, ...prev]);
     }
@@ -42,7 +49,6 @@ function App() {
 
     setInputValue(todo.todoName);
     setEditingId(id);
-    setIsEditable(true);
   };
 
   return (
@@ -52,7 +58,7 @@ function App() {
         addTodo={addTodo}
         inputValue={inputValue}
         setInputValue={setInputValue}
-        isEditable={isEditable}
+        editId={editingId}
       />
       <h2 className="title">TodoList</h2>
       <div className="filter-container">
@@ -62,8 +68,8 @@ function App() {
       </div>
       <TodoList todos={todos} deleteTodo={deleteTodo} editTodo={editTodo} />
       <div className="delete-button-container">
-        <button className="delete-task-btn">Delete done tasks</button>
-        <button className="delete-task-btn">Delete all tasks</button>
+        <button className="delete-task-btn">Delete done todos</button>
+        <button className="delete-task-btn">Delete all todos</button>
       </div>
     </div>
   );

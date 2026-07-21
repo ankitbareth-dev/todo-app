@@ -3,7 +3,7 @@ export default function TodoInput({
   addTodo,
   inputValue,
   setInputValue,
-  isEditable,
+  editId,
 }) {
   return (
     <div className="todo-input-container">
@@ -15,7 +15,7 @@ export default function TodoInput({
         onChange={(e) => setInputValue(e.target.value)}
       />
       <button className="add-todo-btn" onClick={addTodo}>
-        {isEditable ? <p>Update Todo</p> : <p>Add new todo</p>}
+        {editId ? <p>Update Todo</p> : <p>Add new todo</p>}
       </button>
     </div>
   );
