@@ -13,6 +13,10 @@ function App() {
         <button className="filter-btn">Completed</button>
       </div>
       <TodoList />
+      <div className="delete-button-container">
+        <button className="delete-task-btn">Delete done tasks</button>
+        <button className="delete-task-btn">Delete all tasks</button>
+      </div>
     </div>
   );
 }

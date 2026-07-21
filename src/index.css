@@ -17,7 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  border: 1px solid green;
+  /* border: 1px solid green; */
 }
 .title {
   text-align: center;
@@ -25,11 +25,11 @@ body {
   font-size: 1.5em;
 }
 .filter-container {
-  padding: 2rem;
+  padding: 1.5rem;
   display: flex;
   justify-content: center;
   gap: 0.8rem;
-  border: 1px solid crimson;
+  /* border: 1px solid crimson; */
 }
 .filter-btn {
   padding-top: 0.5rem;
@@ -40,5 +40,20 @@ body {
   font-size: 1em;
   font-weight: lighter;
   border: none;
+  border-radius: 4px;
+}
+.delete-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  /* border: 1px solid brown; */
+  padding: 0.6rem;
+}
+.delete-task-btn {
+  padding: 0.4rem;
+  width: 24rem;
+  border-style: none;
+  background-color: red;
+  color: white;
   border-radius: 4px;
 }
