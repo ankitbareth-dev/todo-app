@@ -27,14 +27,14 @@ body {
 .filter-container {
   padding: 1.5rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 0.8rem;
   /* border: 1px solid crimson; */
 }
 .filter-btn {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  width: 12rem;
+  width: 20rem;
   background-color: rgb(11, 163, 224);
   color: white;
   font-size: 1em;
