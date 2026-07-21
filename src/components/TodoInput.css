@@ -5,6 +5,7 @@
   border: 1px solid rgb(220, 219, 219);
   padding: 2rem;
   border-radius: 4px;
+  align-items: center;
 }
 .todo-input {
   padding: 0.5em;
@@ -14,7 +15,8 @@
 .add-todo-btn {
   padding: 0.5em;
   width: 34rem;
-  border-radius: 24px solid;
+  border-style: none;
+  border-radius: 4px;
   background-color: rgb(11, 163, 224);
   color: white;
   font-size: 1em;

@@ -8,18 +8,37 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
+  background-color: rgb(253, 254, 255);
 }
 
 .app-container {
-  padding: 2rem;
+  padding: 1rem 2rem;
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
+  gap: 0.5rem;
+  border: 1px solid green;
 }
-.input-title {
+.title {
   text-align: center;
   font-weight: lighter;
-  font-size: 3em;
-  margin-bottom: 0.5rem;
+  font-size: 1.5em;
+}
+.filter-container {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  border: 1px solid crimson;
+}
+.filter-btn {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  width: 12rem;
+  background-color: rgb(11, 163, 224);
+  color: white;
+  font-size: 1em;
+  font-weight: lighter;
+  border: none;
+  border-radius: 4px;
 }
