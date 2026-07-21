@@ -1,13 +1,10 @@
-import { useState } from "react";
 import "./TodoInput.css";
-export default function TodoInput({ addTodo }) {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleAddTodo = () => {
-    if (!inputValue.trim()) return;
-    addTodo(inputValue);
-    setInputValue("");
-  };
+export default function TodoInput({
+  addTodo,
+  inputValue,
+  setInputValue,
+  isEditable,
+}) {
   return (
     <div className="todo-input-container">
       <input
@@ -17,8 +14,8 @@ export default function TodoInput({ addTodo }) {
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
-      <button className="add-todo-btn" onClick={handleAddTodo}>
-        Add new task
+      <button className="add-todo-btn" onClick={addTodo}>
+        {isEditable ? <p>Update Todo</p> : <p>Add new todo</p>}
       </button>
     </div>
   );

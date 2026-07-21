@@ -1,21 +1,24 @@
 import "./TodoList.css";
 
-export default function TodoList({ todos, deleteTodo }) {
+export default function TodoList({ todos, deleteTodo, editTodo }) {
+
   return (
     <div className="list-container">
       {todos.length > 0 ? (
-        todos.map((ele) => {
+        todos.map((todo) => {
           return (
-            <div className="list-item" key={ele.id}>
+            <div className="list-item" key={todo.id}>
               <div className="left-side">
-                <p>{ele.todoName}</p>
+                <p>{todo.todoName}</p>
               </div>
 
               <div className="right-side">
-                <button className="edit-btn">Edit</button>
+                <button className="edit-btn" onClick={() => editTodo(todo.id)}>
+                  Edit
+                </button>
                 <button
                   className="delete-btn"
-                  onClick={() => deleteTodo(ele.id)}
+                  onClick={() => deleteTodo(todo.id)}
                 >
                   Delete
                 </button>
