@@ -130,7 +130,6 @@ function App() {
 
   return (
     <div className="app-shell">
-      {/* Horizontal Header */}
       <header className="app-header">
         <div className="header-brand">
           <FiCheckSquare size={24} />
@@ -150,7 +149,6 @@ function App() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="app-main">
         <div className="main-header">
           <h2>My Tasks</h2>
