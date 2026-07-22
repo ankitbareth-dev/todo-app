@@ -130,29 +130,29 @@ function App() {
 
   return (
     <div className="app-shell">
-      <aside className="app-sidebar">
-        <div className="sidebar-header">
+      {/* Horizontal Header */}
+      <header className="app-header">
+        <div className="header-brand">
           <FiCheckSquare size={24} />
           <h1>Task Manager</h1>
         </div>
 
-        <div className="sidebar-footer">
-          <div className="delete-button-container">
-            <button
-              className="delete-task-btn"
-              onClick={handleDeleteCompletedClick}
-            >
-              Delete completed
-            </button>
-            <button className="delete-task-btn" onClick={handleDeleteAllClick}>
-              <FiTrash2 /> Delete all todos
-            </button>
-          </div>
+        <div className="header-actions">
+          <button
+            className="header-action-btn"
+            onClick={handleDeleteCompletedClick}
+          >
+            Delete completed
+          </button>
+          <button className="header-action-btn" onClick={handleDeleteAllClick}>
+            <FiTrash2 /> Delete all
+          </button>
         </div>
-      </aside>
+      </header>
 
+      {/* Main Content */}
       <main className="app-main">
-        <header className="main-header">
+        <div className="main-header">
           <h2>My Tasks</h2>
           <span className="date">
             {new Date().toLocaleDateString("en-US", {
@@ -161,7 +161,7 @@ function App() {
               day: "numeric",
             })}
           </span>
-        </header>
+        </div>
 
         <section className="input-section">
           <TodoInput
