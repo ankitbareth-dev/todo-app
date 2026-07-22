@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FiCheckSquare, FiLogIn } from "react-icons/fi";
+import { FiCheckSquare, FiLogIn, FiLoader } from "react-icons/fi";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
 
@@ -11,26 +12,35 @@ export default function LoginPage() {
   } = useForm();
   const navigate = useNavigate();
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loginError, setLoginError] = useState("");
+
   const onSubmit = (data) => {
     const { email, password } = data;
 
-    const users = JSON.parse(localStorage.getItem("users")) || {};
-    const exisitingUser = users[email];
+    setIsSubmitting(true);
+    setLoginError("");
 
-    if (!exisitingUser) {
-      users[email] = {
-        password,
-        todos: [],
-      };
-      localStorage.setItem("users", JSON.stringify(users));
-    } else {
-      if (exisitingUser.password !== password) {
-        alert("password is not correct");
-        return;
+    setTimeout(() => {
+      const users = JSON.parse(localStorage.getItem("users")) || {};
+      const exisitingUser = users[email];
+
+      if (!exisitingUser) {
+        users[email] = {
+          password,
+          todos: [],
+        };
+        localStorage.setItem("users", JSON.stringify(users));
+      } else {
+        if (exisitingUser.password !== password) {
+          setLoginError("Incorrect password. Please try again.");
+          setIsSubmitting(false);
+          return;
+        }
       }
-    }
-    localStorage.setItem("currentUser", email);
-    navigate("/");
+      localStorage.setItem("currentUser", email);
+      navigate("/");
+    }, 600);
   };
 
   return (
@@ -40,6 +50,8 @@ export default function LoginPage() {
           <FiCheckSquare size={32} />
           <h1>Task Manager</h1>
         </div>
+
+        {loginError && <div className="login-error-box">{loginError}</div>}
 
         <div className="login-input-group">
           <label htmlFor="email">Email</label>
@@ -81,8 +93,16 @@ export default function LoginPage() {
           )}
         </div>
 
-        <button type="submit" className="login-btn">
-          <FiLogIn /> Login
+        <button type="submit" className="login-btn" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <>
+              <FiLoader className="spin" /> Logging in...
+            </>
+          ) : (
+            <>
+              <FiLogIn /> Login
+            </>
+          )}
         </button>
       </form>
     </div>
