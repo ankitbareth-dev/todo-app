@@ -7,8 +7,11 @@ import { FiCheckSquare, FiTrash2 } from "react-icons/fi";
 
 function App() {
   const [todos, setTodos] = useState(() => {
-    const storedTodos = localStorage.getItem("todos");
-    return storedTodos ? JSON.parse(storedTodos) : [];
+    const currentUser = localStorage.getItem("currentUser");
+
+    const users = JSON.parse(localStorage.getItem("users")) || {};
+
+    return users[currentUser]?.todos || [];
   });
   const [inputValue, setInputValue] = useState("");
   const [editingId, setEditingId] = useState(null);
@@ -19,7 +22,15 @@ function App() {
   const [confirmCallback, setConfirmCallback] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
+    const currentUser = localStorage.getItem("currentUser");
+
+    const users = JSON.parse(localStorage.getItem("users")) || {};
+
+    if (!currentUser || !users[currentUser]) return;
+
+    users[currentUser].todos = todos;
+
+    localStorage.setItem("users", JSON.stringify(users));
   }, [todos]);
 
   const addTodo = () => {
