@@ -45,7 +45,7 @@ export default function LoginPage() {
 
   return (
     <div className="login-page">
-      <form className="login-card" onSubmit={handleSubmit(onSubmit)}>
+      <form className="login-card" onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="login-brand">
           <FiCheckSquare size={32} />
           <h1>Task Manager</h1>
