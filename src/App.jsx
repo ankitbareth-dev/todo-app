@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 import ConfirmationModal from "./components/ConfirmationModal";
 
-import { FiCheckSquare, FiTrash2 } from "react-icons/fi";
+import { FiCheckSquare, FiTrash2, FiLogOut } from "react-icons/fi";
 
 function App() {
+  const navigate = useNavigate();
+
   const [todos, setTodos] = useState(() => {
     const currentUser = localStorage.getItem("currentUser");
-
     const users = JSON.parse(localStorage.getItem("users")) || {};
-
     return users[currentUser]?.todos || [];
   });
   const [inputValue, setInputValue] = useState("");
@@ -23,15 +24,18 @@ function App() {
 
   useEffect(() => {
     const currentUser = localStorage.getItem("currentUser");
-
     const users = JSON.parse(localStorage.getItem("users")) || {};
 
     if (!currentUser || !users[currentUser]) return;
 
     users[currentUser].todos = todos;
-
     localStorage.setItem("users", JSON.stringify(users));
   }, [todos]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    navigate("/login");
+  };
 
   const addTodo = () => {
     if (!inputValue.trim()) return;
@@ -156,6 +160,13 @@ function App() {
           </button>
           <button className="header-action-btn" onClick={handleDeleteAllClick}>
             <FiTrash2 /> Delete all
+          </button>
+
+          <button
+            className="header-action-btn logout-btn"
+            onClick={handleLogout}
+          >
+            <FiLogOut /> Logout
           </button>
         </div>
       </header>

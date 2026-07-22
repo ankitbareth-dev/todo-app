@@ -110,6 +110,12 @@ body {
   color: var(--color-surface);
 }
 
+.header-action-btn.logout-btn:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-surface);
+}
+
 /* --- Main Content Layout --- */
 .app-main {
   flex: 1;
