@@ -2,6 +2,14 @@ import { useEffect, useState } from "react";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 
+import {
+  FiCheckSquare,
+  FiTrash2,
+  FiGrid,
+  FiCheckCircle,
+  FiClock,
+} from "react-icons/fi";
+
 function App() {
   const [todos, setTodos] = useState(() => {
     const storedTodos = localStorage.getItem("todos");
@@ -24,7 +32,6 @@ function App() {
           todo.id === editingId ? { ...todo, todoName: inputValue } : todo,
         ),
       );
-
       setEditingId(null);
     } else {
       const newTodo = {
@@ -32,10 +39,8 @@ function App() {
         todoName: inputValue,
         completed: false,
       };
-
       setTodos((prev) => [newTodo, ...prev]);
     }
-
     setInputValue("");
   };
 
@@ -53,7 +58,6 @@ function App() {
     } else {
       setInputValue(todo.todoName);
     }
-
     setEditingId(id);
   };
 
@@ -73,10 +77,8 @@ function App() {
     switch (activeTab) {
       case "completed":
         return todos.filter((todo) => todo.completed);
-
       case "pending":
         return todos.filter((todo) => !todo.completed);
-
       default:
         return todos;
     }
@@ -92,40 +94,76 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <h2 className="title">TodoInput</h2>
-      <TodoInput
-        addTodo={addTodo}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        editId={editingId}
-      />
-      <h2 className="title">TodoList</h2>
-      <div className="filter-container">
-        <button className="filter-btn" onClick={() => handleTabs("all")}>
-          All
-        </button>
-        <button className="filter-btn" onClick={() => handleTabs("completed")}>
-          Completed
-        </button>
-        <button className="filter-btn" onClick={() => handleTabs("pending")}>
-          Pending
-        </button>
-      </div>
-      <TodoList
-        todos={filteredTodos}
-        deleteTodo={deleteTodo}
-        editTodo={editTodo}
-        handleToggleTodo={handleToggleTodo}
-      />
-      <div className="delete-button-container">
-        <button className="delete-task-btn" onClick={deleteCompletedTodos}>
-          Delete completed todos
-        </button>
-        <button className="delete-task-btn" onClick={deleteAllTodos}>
-          Delete all todos
-        </button>
-      </div>
+    <div className="app-shell">
+      <aside className="app-sidebar">
+        <div className="sidebar-header">
+          <FiCheckSquare size={24} />
+          <h1>Task Manager</h1>
+        </div>
+
+        <div className="sidebar-footer">
+          <div className="delete-button-container">
+            <button className="delete-task-btn" onClick={deleteCompletedTodos}>
+              <FiCheckCircle /> Delete completed
+            </button>
+            <button className="delete-task-btn" onClick={deleteAllTodos}>
+              <FiTrash2 /> Delete all todos
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <main className="app-main">
+        <header className="main-header">
+          <h2>My Tasks</h2>
+          <span className="date">
+            {new Date().toLocaleDateString("en-US", {
+              weekday: "long",
+              month: "short",
+              day: "numeric",
+            })}
+          </span>
+        </header>
+
+        <section className="input-section">
+          <TodoInput
+            addTodo={addTodo}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            editId={editingId}
+          />
+        </section>
+
+        <section className="list-section">
+          <div className="list-toolbar">
+            <h3 className="section-title">TodoList</h3>
+            <div className="filter-container">
+              <button className="filter-btn" onClick={() => handleTabs("all")}>
+                <FiGrid /> All
+              </button>
+              <button
+                className="filter-btn"
+                onClick={() => handleTabs("completed")}
+              >
+                <FiCheckCircle /> Completed
+              </button>
+              <button
+                className="filter-btn"
+                onClick={() => handleTabs("pending")}
+              >
+                <FiClock /> Pending
+              </button>
+            </div>
+          </div>
+
+          <TodoList
+            todos={filteredTodos}
+            deleteTodo={deleteTodo}
+            editTodo={editTodo}
+            handleToggleTodo={handleToggleTodo}
+          />
+        </section>
+      </main>
     </div>
   );
 }

@@ -1,4 +1,6 @@
 import "./TodoInput.css";
+import { FiPlus, FiEdit2 } from "react-icons/fi";
+
 export default function TodoInput({
   addTodo,
   inputValue,
@@ -9,13 +11,18 @@ export default function TodoInput({
     <div className="todo-input-container">
       <input
         type="text"
-        placeholder="New Todo"
+        placeholder="Add a new task..."
         className="todo-input"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
-      <button className="add-todo-btn" onClick={addTodo}>
-        {editId ? <p>Update Todo</p> : <p>Add new todo</p>}
+      <button
+        className="add-todo-btn"
+        onClick={addTodo}
+        disabled={!inputValue.trim()}
+      >
+        {editId ? <FiEdit2 /> : <FiPlus />}
+        {editId ? <p>Update</p> : <p>Add Task</p>}
       </button>
     </div>
   );
