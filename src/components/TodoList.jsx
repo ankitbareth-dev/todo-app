@@ -1,6 +1,11 @@
 import "./TodoList.css";
 
-export default function TodoList({ todos, deleteTodo, editTodo }) {
+export default function TodoList({
+  todos,
+  deleteTodo,
+  editTodo,
+  handleToggleTodo,
+}) {
   return (
     <div className="list-container">
       {todos.length > 0 ? (
@@ -8,11 +13,18 @@ export default function TodoList({ todos, deleteTodo, editTodo }) {
           return (
             <div className="list-item" key={todo.id}>
               <div className="left-side">
-                <p>{todo.todoName}</p>
+                <p className={todo.completed ? "completed" : ""}>
+                  {todo.todoName}
+                </p>
               </div>
 
               <div className="right-side">
-                <input type="checkbox" className="todo-checkbox" />
+                <input
+                  type="checkbox"
+                  className="todo-checkbox"
+                  checked={todo.completed}
+                  onChange={() => handleToggleTodo(todo.id)}
+                />
                 <button className="edit-btn" onClick={() => editTodo(todo.id)}>
                   Edit
                 </button>

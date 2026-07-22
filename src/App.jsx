@@ -9,6 +9,7 @@ function App() {
   });
   const [inputValue, setInputValue] = useState("");
   const [editingId, setEditingId] = useState(null);
+  const [activeTab, setActiveTab] = useState("All");
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -29,9 +30,8 @@ function App() {
       const newTodo = {
         id: Date.now(),
         todoName: inputValue,
+        completed: false,
       };
-
-      localStorage.setItem("todos", JSON.stringify(todos));
 
       setTodos((prev) => [newTodo, ...prev]);
     }
@@ -46,10 +46,41 @@ function App() {
 
   const editTodo = (id) => {
     const todo = todos.find((todo) => todo.id === id);
+    console.log(todo);
+    if (todo.completed) {
+      setInputValue("");
+      return;
+    } else {
+      setInputValue(todo.todoName);
+    }
 
-    setInputValue(todo.todoName);
     setEditingId(id);
   };
+
+  const handleTabs = (tab) => {
+    setActiveTab(tab);
+  };
+
+  const handleToggleTodo = (id) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      ),
+    );
+  };
+
+  const filteredTodos = (() => {
+    switch (activeTab) {
+      case "completed":
+        return todos.filter((todo) => todo.completed);
+
+      case "pending":
+        return todos.filter((todo) => !todo.completed);
+
+      default:
+        return todos;
+    }
+  })();
 
   return (
     <div className="app-container">
@@ -62,11 +93,22 @@ function App() {
       />
       <h2 className="title">TodoList</h2>
       <div className="filter-container">
-        <button className="filter-btn">All</button>
-        <button className="filter-btn">Completed</button>
-        <button className="filter-btn">Pending</button>
+        <button className="filter-btn" onClick={() => handleTabs("all")}>
+          All
+        </button>
+        <button className="filter-btn" onClick={() => handleTabs("completed")}>
+          Completed
+        </button>
+        <button className="filter-btn" onClick={() => handleTabs("pending")}>
+          Pending
+        </button>
       </div>
-      <TodoList todos={todos} deleteTodo={deleteTodo} editTodo={editTodo} />
+      <TodoList
+        todos={filteredTodos}
+        deleteTodo={deleteTodo}
+        editTodo={editTodo}
+        handleToggleTodo={handleToggleTodo}
+      />
       <div className="delete-button-container">
         <button className="delete-task-btn">Delete done todos</button>
         <button className="delete-task-btn">Delete all todos</button>
