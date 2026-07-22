@@ -111,6 +111,7 @@ function App() {
   };
 
   const handleDeleteAllClick = () => {
+    if (todos.length === 0) return;
     openConfirmationModal(
       "Delete All Tasks?",
       "Warning: This will delete every task in your list. This action cannot be undone.",
@@ -119,6 +120,7 @@ function App() {
   };
 
   const handleDeleteCompletedClick = () => {
+    if (!todos.some((todo) => todo.completed)) return;
     openConfirmationModal(
       "Delete Completed Tasks?",
       "This will permanently remove all completed tasks. This action cannot be undone.",
