@@ -82,6 +82,15 @@ function App() {
     }
   })();
 
+  const deleteAllTodos = () => {
+    setTodos([]);
+    localStorage.setItem("todos", JSON.stringify(todos));
+  };
+
+  const deleteCompletedTodos = () => {
+    setTodos((prev) => prev.filter((todo) => !todo.completed));
+  };
+
   return (
     <div className="app-container">
       <h2 className="title">TodoInput</h2>
@@ -110,8 +119,12 @@ function App() {
         handleToggleTodo={handleToggleTodo}
       />
       <div className="delete-button-container">
-        <button className="delete-task-btn">Delete done todos</button>
-        <button className="delete-task-btn">Delete all todos</button>
+        <button className="delete-task-btn" onClick={deleteCompletedTodos}>
+          Delete completed todos
+        </button>
+        <button className="delete-task-btn" onClick={deleteAllTodos}>
+          Delete all todos
+        </button>
       </div>
     </div>
   );
