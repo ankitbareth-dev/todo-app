@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
+import ConfirmationModal from "./components/ConfirmationModal";
 
-import {
-  FiCheckSquare,
-  FiTrash2,
-  FiGrid,
-  FiCheckCircle,
-  FiClock,
-} from "react-icons/fi";
+import { FiCheckSquare, FiTrash2 } from "react-icons/fi";
 
 function App() {
   const [todos, setTodos] = useState(() => {
@@ -17,7 +12,11 @@ function App() {
   });
   const [inputValue, setInputValue] = useState("");
   const [editingId, setEditingId] = useState(null);
-  const [activeTab, setActiveTab] = useState("All");
+  const [activeTab, setActiveTab] = useState("all");
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalConfig, setModalConfig] = useState({ title: "", message: "" });
+  const [confirmCallback, setConfirmCallback] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -51,7 +50,6 @@ function App() {
 
   const editTodo = (id) => {
     const todo = todos.find((todo) => todo.id === id);
-    console.log(todo);
     if (todo.completed) {
       setInputValue("");
       return;
@@ -93,6 +91,41 @@ function App() {
     setTodos((prev) => prev.filter((todo) => !todo.completed));
   };
 
+  const openConfirmationModal = (title, message, callback) => {
+    setModalConfig({ title, message });
+    setConfirmCallback(() => callback);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirm = () => {
+    if (confirmCallback) confirmCallback();
+    setIsModalOpen(false);
+  };
+
+  const handleDeleteTodoClick = (id) => {
+    openConfirmationModal(
+      "Delete Todo?",
+      "Are you sure you want to delete this task? This action cannot be undone.",
+      () => deleteTodo(id),
+    );
+  };
+
+  const handleDeleteAllClick = () => {
+    openConfirmationModal(
+      "Delete All Tasks?",
+      "Warning: This will delete every task in your list. This action cannot be undone.",
+      deleteAllTodos,
+    );
+  };
+
+  const handleDeleteCompletedClick = () => {
+    openConfirmationModal(
+      "Delete Completed Tasks?",
+      "This will permanently remove all completed tasks. This action cannot be undone.",
+      deleteCompletedTodos,
+    );
+  };
+
   return (
     <div className="app-shell">
       <aside className="app-sidebar">
@@ -103,10 +136,13 @@ function App() {
 
         <div className="sidebar-footer">
           <div className="delete-button-container">
-            <button className="delete-task-btn" onClick={deleteCompletedTodos}>
-              <FiCheckCircle /> Delete completed
+            <button
+              className="delete-task-btn"
+              onClick={handleDeleteCompletedClick}
+            >
+              Delete completed
             </button>
-            <button className="delete-task-btn" onClick={deleteAllTodos}>
+            <button className="delete-task-btn" onClick={handleDeleteAllClick}>
               <FiTrash2 /> Delete all todos
             </button>
           </div>
@@ -137,33 +173,36 @@ function App() {
         <section className="list-section">
           <div className="list-toolbar">
             <h3 className="section-title">TodoList</h3>
-            <div className="filter-container">
-              <button className="filter-btn" onClick={() => handleTabs("all")}>
-                <FiGrid /> All
-              </button>
-              <button
-                className="filter-btn"
-                onClick={() => handleTabs("completed")}
+
+            <div className="filter-dropdown-wrapper">
+              <select
+                className="filter-dropdown"
+                value={activeTab}
+                onChange={(e) => handleTabs(e.target.value)}
               >
-                <FiCheckCircle /> Completed
-              </button>
-              <button
-                className="filter-btn"
-                onClick={() => handleTabs("pending")}
-              >
-                <FiClock /> Pending
-              </button>
+                <option value="all">All Tasks</option>
+                <option value="completed">Completed</option>
+                <option value="pending">Pending</option>
+              </select>
             </div>
           </div>
 
           <TodoList
             todos={filteredTodos}
-            deleteTodo={deleteTodo}
+            deleteTodo={handleDeleteTodoClick}
             editTodo={editTodo}
             handleToggleTodo={handleToggleTodo}
           />
         </section>
       </main>
+
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirm}
+        title={modalConfig.title}
+        message={modalConfig.message}
+      />
     </div>
   );
 }

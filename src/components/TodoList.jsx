@@ -1,3 +1,4 @@
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import "./TodoList.css";
 
 export default function TodoList({
@@ -13,26 +14,32 @@ export default function TodoList({
           return (
             <div className="list-item" key={todo.id}>
               <div className="left-side">
-                <p className={todo.completed ? "completed" : ""}>
-                  {todo.todoName}
-                </p>
-              </div>
-
-              <div className="right-side">
                 <input
                   type="checkbox"
                   className="todo-checkbox"
                   checked={todo.completed}
                   onChange={() => handleToggleTodo(todo.id)}
                 />
-                <button className="edit-btn" onClick={() => editTodo(todo.id)}>
-                  Edit
+                <p className={todo.completed ? "completed" : ""}>
+                  {todo.todoName}
+                </p>
+              </div>
+
+              <div className="right-side">
+                <button
+                  className="icon-btn edit-btn"
+                  onClick={() => editTodo(todo.id)}
+                  disabled={todo.completed}
+                  data-tooltip="Edit"
+                >
+                  <FiEdit2 />
                 </button>
                 <button
-                  className="delete-btn"
+                  className="icon-btn delete-btn"
                   onClick={() => deleteTodo(todo.id)}
+                  data-tooltip="Delete"
                 >
-                  Delete
+                  <FiTrash2 />
                 </button>
               </div>
             </div>
