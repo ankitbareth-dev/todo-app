@@ -15,8 +15,13 @@ export default function LoginPage() {
         </div>
 
         <div className="login-input-group">
-          <label htmlFor="userId">User ID</label>
-          <input id="userId" type="text" placeholder="Enter your ID" required />
+          <label htmlFor="userId">Email</label>
+          <input
+            id="userId"
+            type="text"
+            placeholder="Enter your email"
+            required
+          />
         </div>
 
         <div className="login-input-group">
