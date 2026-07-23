@@ -96,7 +96,7 @@ export default function LoginPage() {
         <button type="submit" className="login-btn" disabled={isSubmitting}>
           {isSubmitting ? (
             <>
-              <FiLoader className="spin" /> Logging in...
+              <FiLoader className="spin" /> Logging in....
             </>
           ) : (
             <>
